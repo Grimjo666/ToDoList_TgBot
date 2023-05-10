@@ -1,0 +1,3 @@
+from .create_new_task import register_handlers_create_tasks
+from .send_task_list import register_handlers_send_task
+from .delete_tasks import register_handlers_delete_tasks
