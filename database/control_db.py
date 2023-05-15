@@ -38,11 +38,11 @@ def get_task(user_id: int) -> list[tuple]:
 
 
 # Удаление задачи из БД
-def delete_task(user_id: int, name):
+def delete(user_id: int, id):
     base = sqlite3.connect('database/todo_data.db')
     cur = base.cursor()
 
-    cur.execute("DELETE FROM todo_tasks WHERE user_id == ? AND task == ?", (user_id, name))
+    cur.execute("DELETE FROM todo_tasks WHERE user_id == ? AND task == ?", (user_id, id))
 
     base.commit()
     cur.close()
