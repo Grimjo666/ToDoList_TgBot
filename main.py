@@ -12,12 +12,11 @@ logging.basicConfig(level=logging.INFO)
 
 # # Хэндлер, присылающий основное меню через команду старт
 @dp.message_handler(commands=['start', 'help'])
-async def command_start(message: types.Message, state: FSMContext):
+async def command_start(message: types.Message):
     start_text = 'Я ToDo-bot, созданный что бы помочь тебе повысить твою продуктивность\n\n'\
                  'Вот список моих команд:\n'\
                  '/start, /help - вызывает это сообщение\n'\
                  '/delete_all - удалить все задачи'
-    await state.update_data(start_text=start_text)
 
     await bot.send_message(chat_id=message.chat.id,
                            text=start_text,
@@ -29,8 +28,10 @@ async def command_start(message: types.Message, state: FSMContext):
 async def send_main_menu(callback_query: types.CallbackQuery, state: FSMContext):
     chat_id = callback_query.message.chat.id
     message_id = callback_query.message.message_id
-    data = await state.get_data()
-    start_text = data.get('start_text')
+    start_text = 'Я ToDo-bot, созданный что бы помочь тебе повысить твою продуктивность\n\n' \
+                 'Вот список моих команд:\n' \
+                 '/start, /help - вызывает это сообщение\n' \
+                 '/delete_all - удалить все задачи'
 
     await bot.edit_message_text(text=start_text,
                                 chat_id=chat_id,

@@ -27,12 +27,17 @@ async def waiting_del_number(callback_query: types.CallbackQuery, state: FSMCont
     await DeleteTask.number.set()
 
 
-async def delete_task(callback_query: types.CallbackQuery, state: FSMContext):
-    if callback_query.data == 'button_main_menu':
-        await state.finish()
+async def delete_task(message: types.Message, state: FSMContext):
+    await message.answer('хэндлер делит сработал')
+
+
+async def stop_state(message: types.Message, state: FSMContext):
+    await message.answer('Отменено')
+    await state.finish()
 
 
 def register_handlers_delete_tasks(dp: Dispatcher):
+    dp.register_callback_query_handler(stop_state, lambda c: c.data == 'button_cancel', state='*')
     dp.register_message_handler(delete_all_tasks, commands=['delete_all'])
     dp.register_callback_query_handler(waiting_del_number, lambda c: c.data == 'button_delete_task_menu')
-    dp.register_callback_query_handler(delete_task, state=DeleteTask.number)
+    dp.register_message_handler(delete_task, state=DeleteTask.number)

@@ -9,6 +9,7 @@ button_add_task = InlineKeyboardButton('Добавить задачу', callback
 button_delete_task_menu = InlineKeyboardButton('Удалить задачу', callback_data='button_delete_task_menu')
 button_done = InlineKeyboardButton('Задача выполнена', callback_data='button_done')
 button_main_menu = InlineKeyboardButton('В главное меню', callback_data='button_main_menu')
+button_cancel = InlineKeyboardButton('Отмена', callback_data='button_cancel')
 
 # Главное меню бота
 task_menu = InlineKeyboardMarkup()
@@ -21,5 +22,5 @@ del_menu = InlineKeyboardMarkup(row_width=1)
 
 del_btn = InlineKeyboardButton('Удалить', callback_data='button_delete_task')
 
-del_menu.add(del_btn,button_main_menu, button_close)
+del_menu.add(del_btn,button_main_menu, button_cancel, button_close)
 
