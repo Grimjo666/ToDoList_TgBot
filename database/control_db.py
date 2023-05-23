@@ -1,4 +1,5 @@
 import sqlite3
+from collections import namedtuple
 
 
 # Функция для записи задач в БД
@@ -25,12 +26,17 @@ def write_task(user_id: int, name, description=None, task_due_date=None):
 
 
 # Функция для получения списка задач из БД
-def get_task(user_id: int) -> list[tuple]:
+def get_task(user_id: int) -> list[namedtuple]:
+
+    Tasks_data = namedtuple('Tasks_data', ['id', 'task', 'task_description', 'task_due_date'])
+
     base = sqlite3.connect('database/todo_data.db')
     cur = base.cursor()
-    cur.execute("SELECT task, task_description, task_due_date FROM todo_tasks WHERE user_id == ?", (user_id,))
+    cur.execute("SELECT id, task, task_description, task_due_date FROM todo_tasks WHERE user_id == ?", (user_id,))
 
-    tasks_list = cur.fetchall()
+    tasks_list = list()
+    for item in  cur.fetchall():
+        tasks_list.append(Tasks_data(*item))
 
     cur.close()
     base.close()
@@ -42,7 +48,7 @@ def delete(user_id: int, id):
     base = sqlite3.connect('database/todo_data.db')
     cur = base.cursor()
 
-    cur.execute("DELETE FROM todo_tasks WHERE user_id == ? AND task == ?", (user_id, id))
+    cur.execute("DELETE FROM todo_tasks WHERE user_id == ? AND id == ?", (user_id, id))
 
     base.commit()
     cur.close()
