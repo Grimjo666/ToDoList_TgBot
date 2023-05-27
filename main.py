@@ -17,6 +17,7 @@ async def command_start(message: types.Message):
     start_text = 'Я ToDo-bot, созданный что бы помочь тебе повысить твою продуктивность\n\n'\
                  'Вот список моих команд:\n'\
                  '/start, /help - вызывает это сообщение\n'\
+                 '/show_tasks - прислать список задач в виде сообщения'
 
     await bot.send_message(chat_id=message.chat.id,
                            text=start_text,
@@ -33,7 +34,8 @@ async def send_main_menu(callback_query: types.CallbackQuery, state: FSMContext)
     message_id = callback_query.message.message_id
     start_text = 'Я ToDo-bot, созданный что бы помочь тебе повысить твою продуктивность\n\n' \
                  'Вот список моих команд:\n' \
-                 '/start, /help - вызывает это сообщение\n'
+                 '/start, /help - вызывает это сообщение\n' \
+                 '/show_tasks - прислать список задач в виде сообщения'
 
     await bot.edit_message_text(text=start_text,
                                 chat_id=chat_id,
